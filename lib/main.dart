@@ -70,10 +70,10 @@ class CompassPainter extends CustomPainter {
     Offset start = Offset.lerp(Offset(center.dx, radius), center, .4);
     Offset end = Offset.lerp(Offset(center.dx, radius), center, 0.1);
 
-    Offset north = Offset(centerX - 5, (centerY - radius) + 5);
-    Offset south = Offset(centerX - 5, (centerY + radius) - 20);
-    Offset east = Offset(20, centerY);
-    Offset west = Offset(size.width - 35, centerY);
+    Offset north = Offset(centerX - 18, (centerY - radius));
+    Offset south = Offset(centerX - 18, (centerY + radius) - 55);
+    Offset west = Offset(25, centerY - 25);
+    Offset east = Offset(size.width - 55, centerY - 25);
 
     canvas.drawLine(start, end, needle);
     canvas.drawCircle(center, radius, circle);
@@ -89,7 +89,7 @@ class CompassPainter extends CustomPainter {
 
   void paintDirectionText(Canvas canvas, String label, Offset offset) {
     TextSpan span =
-        new TextSpan(style: new TextStyle(color: Colors.white), text: label);
+        new TextSpan(style: new TextStyle(color: Colors.white, fontSize: 48), text: label);
     TextPainter textPainter = new TextPainter(
         text: span,
         textAlign: TextAlign.left,
