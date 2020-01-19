@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_compass/flutter_compass.dart';
 
 void main() => runApp(CompassDemo());
 
@@ -30,7 +31,12 @@ class _CompassState extends State<Compass> {
   @override
   void initState() {
     super.initState();
+    FlutterCompass.events.listen(_onData);
   }
+
+  void _onData(double x) => setState(() {
+        _heading = x;
+      });
 
   final TextStyle _style = TextStyle(
     color: Colors.red[50].withOpacity(0.9),
@@ -78,7 +84,7 @@ class CompassPainter extends CustomPainter {
     canvas.drawLine(start, end, needle);
     canvas.drawCircle(center, radius, circle);
     canvas.translate(center.dx, center.dy);
-    canvas.rotate(0);
+    canvas.rotate(rotation);
 
     canvas.translate(-center.dx, -center.dy);
     paintDirectionText(canvas, "N", north);
@@ -88,8 +94,8 @@ class CompassPainter extends CustomPainter {
   }
 
   void paintDirectionText(Canvas canvas, String label, Offset offset) {
-    TextSpan span =
-        new TextSpan(style: new TextStyle(color: Colors.white, fontSize: 48), text: label);
+    TextSpan span = new TextSpan(
+        style: new TextStyle(color: Colors.white, fontSize: 48), text: label);
     TextPainter textPainter = new TextPainter(
         text: span,
         textAlign: TextAlign.left,
